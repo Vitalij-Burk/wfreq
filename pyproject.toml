@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wfreq"
+version = "0.1.0"
+description = "CLI tool for frequency analyzing"
+authors = [{name = "Vit Burk", email = "burkasovvitalij@gmail.com"}]
+dependencies = [
+	"aiofiles==24.1.0",
+	"iniconfig==2.1.0",
+	"markdown-it-py==4.0.0",
+	"mdurl==0.1.2",
+	"packaging==25.0",
+	"pluggy==1.6.0",
+	"pygments==2.19.2",
+	"pytest==8.4.1",
+	"rich==14.1.0",
+	"uv==0.8.12",
+]
+readme = "README.md"
+license = "MIT"
+
+[project.scripts]
+wfreq = "wfreq.cli:main"
