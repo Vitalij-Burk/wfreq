@@ -7,4 +7,4 @@ pluggy==1.6.0
 pygments==2.19.2
 pytest==8.4.1
 rich==14.1.0
-uv==0.8.12
+uv==0.8.15

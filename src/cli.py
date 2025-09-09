@@ -4,9 +4,9 @@ import time
 from rich.console import Console
 from rich.table import Table
 
-from wfreq.core.filter import Filter
-from wfreq.core.formatter import Formatter
-from wfreq.in_out.finder import Finder
+from src.core.filter import Filter
+from src.core.formatter import Formatter
+from src.in_out.finder import Finder
 
 
 def main():
