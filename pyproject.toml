@@ -29,4 +29,4 @@ readme = "README.md"
 license = "MIT"
 
 [project.scripts]
-wfreq = "src.cli:main"
+wfreq = "wfreq.cli:main"
