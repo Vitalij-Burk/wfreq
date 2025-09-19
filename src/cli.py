@@ -25,6 +25,7 @@ def main():
     parser.add_argument("-rf", "--red_flags")
     parser.add_argument("-a", "--artifacts")
     parser.add_argument("-maxr", "--max_repeat")
+    parser.add_argument("-nt", "--no_tags")
 
 
     args = parser.parse_args()
@@ -41,7 +42,7 @@ def main():
                 continue
         red_flags = red_flags_copy
         start = time.perf_counter_ns()
-        word_list = Finder.find_words_by_local_path(path)
+        word_list = Finder.find_words(path)
         format = Filter.generate_format(min_length, max_length, artifacts, max_repeat)
         formatted_word_list = Filter.compile_word_list(word_list, red_flags, format)
         result = Formatter.format_word_list(formatted_word_list, frequent, rare)
