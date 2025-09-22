@@ -59,7 +59,6 @@ class Finder:
         content = response.text
         soup = BeautifulSoup(content, "html.parser")
         parsed = soup.get_text()
-        print(parsed)
         for word in pattern.findall(parsed):
             word_list.append(word)
         return word_list
