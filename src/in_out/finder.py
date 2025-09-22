@@ -52,7 +52,6 @@ class Finder:
         if isinstance(formatted_data, list):
             for obj in formatted_data:
                 for k, v in obj.items():
-                    print(k, v)
                     for word in pattern.findall(k if isinstance(k, str) else str(k)):
                         word_list.append(word.lower())
                     for word in pattern.findall(v if isinstance(v, str) else str(v)):
