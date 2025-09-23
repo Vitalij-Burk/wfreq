@@ -1,6 +1,8 @@
 import argparse
+import os
 import time
 
+import yaml
 from rich.console import Console
 from rich.table import Table
 
@@ -12,12 +14,13 @@ from src.in_out.finder import Finder
 def main():
     parser = argparse.ArgumentParser(
         prog="wfreq",
-        description="Program for text analyzing",
+        description="A tool for text analyzing",
         epilog="Here you can see some statistics about your texts",
     )
 
 
-    parser.add_argument("path")
+    parser.add_argument("-p", "--path")
+    parser.add_argument("-c", "--config")
     parser.add_argument("-f", "--frequent")
     parser.add_argument("-r", "--rare")
     parser.add_argument("-minl", "--min_length")
@@ -51,16 +54,48 @@ def main():
         return result
 
 
-    counts = wfreq(
-        path=args.path,
-        frequent=int(args.frequent) if isinstance(args.frequent, str) else 10,
-        rare=int(args.rare) if isinstance(args.rare, str) else 0,
-        min_length=int(args.min_length) if isinstance(args.min_length, str) else 3,
-        max_length=int(args.max_length) if isinstance(args.max_length, str) else 70,
-        red_flags=set(args.red_flags.split(",")) if args.red_flags else set(),
-        artifacts=True if args.artifacts else False,
-        max_repeat=int(args.max_repeat) if isinstance(args.max_repeat, str) else 2,
-    )
+    if args.config:
+        path = os.path.expanduser(args.config)
+        with open(path, "r") as file:
+            params = yaml.safe_load(file)
+        config = params["wfreq_config"]
+        path = config["path"]
+        artifacts = config["artifacts"]
+        min_length = config["min_length"]
+        max_length = config["max_length"]
+        rare = config["rare"]
+        frequent = config["frequent"]
+        red_flags = config["red_flags"]
+        max_repeat = config["max_repeat"]
+        counts = wfreq(
+            path=str(path),
+            frequent=frequent,
+            rare=rare,
+            min_length=min_length,
+            max_length=max_length,
+            red_flags=red_flags,
+            artifacts=artifacts,
+            max_repeat=max_repeat,
+        )
+    elif args.path:
+        path = args.path
+        frequent = int(args.frequent) if isinstance(args.frequent, str) else 10
+        rare = int(args.rare) if isinstance(args.rare, str) else 0
+        min_length = int(args.min_length) if isinstance(args.min_length, str) else 3
+        max_length = int(args.max_length) if isinstance(args.max_length, str) else 70
+        red_flags = set(args.red_flags.split(",")) if args.red_flags else set()
+        artifacts = True if args.artifacts else False
+        max_repeat = int(args.max_repeat) if isinstance(args.max_repeat, str) else 2
+        counts = wfreq(
+            path=path,
+            frequent=frequent,
+            rare=rare,
+            min_length=min_length,
+            max_length=max_length,
+            red_flags=red_flags,
+            artifacts=artifacts,
+            max_repeat=max_repeat,
+        )
 
 
     frequent_table = Table(title="Frequent words", expand=True)

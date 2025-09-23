@@ -1,0 +1,9 @@
+wfreq_config:
+  path: ~/code/projects/wfreq
+  artifacts: false
+  min_length: 3
+  max_length: 5
+  frequent: 5
+  rare: 5
+  red_flags: []
+  max_repeat: 3

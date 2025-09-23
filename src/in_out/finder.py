@@ -78,8 +78,8 @@ class Finder:
 
     @classmethod
     def find_words(cls, path: str):
+        path = os.path.expanduser(path)
         format = cls._source_determinant(path)
-        print(format)
         if format == "folder" or format == "file":
             cls._find_words_by_local_path(path)
         elif format == "json":
