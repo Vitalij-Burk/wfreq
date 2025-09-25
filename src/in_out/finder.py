@@ -49,19 +49,17 @@ class Finder:
         response = requests.get(path)
         content = response.text.strip()
         formatted_data = json.loads(content)
+        def words_bypass(obj: dict):
+            for k, v in obj.items():
+                for word in pattern.findall(k if isinstance(k, str) else str(k)):
+                    word_list.append(word.lower())
+                for word in pattern.findall(v if isinstance(v, str) else str(v)):
+                    word_list.append(word.lower())
         if isinstance(formatted_data, list):
             for obj in formatted_data:
-                for k, v in obj.items():
-                    for word in pattern.findall(k if isinstance(k, str) else str(k)):
-                        word_list.append(word.lower())
-                    for word in pattern.findall(v if isinstance(v, str) else str(v)):
-                        word_list.append(word.lower())
+                words_bypass(obj)
         else:
-            for k, v in formatted_data.items():
-                for word in pattern.findall(k):
-                    word_list.append(k.lower())
-                for word in pattern.findall(v):
-                    word_list.append(v.lower())
+            words_bypass(formatted_data)
         return word_list
 
 
